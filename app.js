@@ -5,7 +5,6 @@ const MongoStore       = require('connect-mongo')(session);
 const path             = require('path');
 const cookieParser     = require('cookie-parser');
 const passport         = require('passport');
-//const promisify      = require('es6-promisify');
 const flash            = require('connect-flash');
 const expressValidator = require('express-validator');
 const routes           = require('./routes/index');
@@ -25,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Takes the raw requests and turns them into usable properties on req.body
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 // Exposes a bunch of methods for validating data. Used heavily on userController.validateRegister
 app.use(expressValidator());
