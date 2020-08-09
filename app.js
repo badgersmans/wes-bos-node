@@ -5,6 +5,7 @@ const MongoStore       = require('connect-mongo')(session);
 const path             = require('path');
 const cookieParser     = require('cookie-parser');
 const passport         = require('passport');
+const { promisify }    = require('es6-promisify');
 const flash            = require('connect-flash');
 const expressValidator = require('express-validator');
 const routes           = require('./routes/index');
@@ -58,11 +59,11 @@ app.use((req, res, next) => {
   next();
 });
 
-/* // promisify some callback based APIs
+// promisify some callback based APIs (like passport)
 app.use((req, res, next) => {
   req.login = promisify(req.login, req);
   next();
-}); */
+});
 
 // After allllll that above middleware, we finally handle our own routes!
 app.use('/', routes);

@@ -60,7 +60,7 @@ router
     // 1. validate data
     // 2. register the user
     // 3. log them in after register
-    .post(userController.registerValidator);
+    .post(userController.registerValidator, userController.register);
 
 
 // router.get('/'      , catchErrors(storeController.getStores));
