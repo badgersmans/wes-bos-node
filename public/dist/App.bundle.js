@@ -63,11 +63,41 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+function autocomplete(address, latitude, longitude) {
+    if (!address) return; // skip function if an address wasn't provided on the page
+    // console.log(address, latitude, longitude);
+    var dropdown = new google.maps.places.Autocomplete(address);
+
+    dropdown.addListener('place_changed', function () {
+        var place = dropdown.getPlace();
+        // console.log(place);
+        latitude.value = place.geometry.location.lat();
+        longitude.value = place.geometry.location.lng();
+    });
+
+    //if user hits enter on address field, don't submit form
+    address.on('keydown', function (e) {
+        if (e.keyCode === 13) e.preventDefault();
+    });
+}
+
+exports.default = autocomplete;
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97,21 +127,29 @@ exports.$ = $;
 exports.$$ = $$;
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(1);
+__webpack_require__(2);
 
-var _bling = __webpack_require__(0);
+var _bling = __webpack_require__(1);
+
+var _autocomplete = __webpack_require__(0);
+
+var _autocomplete2 = _interopRequireDefault(_autocomplete);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(0, _autocomplete2.default)((0, _bling.$)('#address'), (0, _bling.$)('#latitude'), (0, _bling.$)('#longitude'));
 
 /***/ })
 /******/ ]);

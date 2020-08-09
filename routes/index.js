@@ -1,6 +1,7 @@
 const express          = require('express');
 const router           = express.Router();
 const storeController  = require('../controllers/storeController');
+const userController   = require('../controllers/userController');
 const { catchErrors }  = require('../handlers/errorHandlers');
 
 // Do work here
@@ -22,13 +23,44 @@ router
 router
     .route('/add')
     .get(storeController.addStore)
-    .post(catchErrors(storeController.createStore));
+    .post(
+        storeController.upload,
+        catchErrors(storeController.resizePhoto),
+        catchErrors(storeController.createStore)
+        );
 
 
 router
     .route('/add/:id')
     .get(storeController.addStore)
-    .post(catchErrors(storeController.updateStore));
+    .post(
+        storeController.upload,
+        catchErrors(storeController.resizePhoto),
+        catchErrors(storeController.updateStore)
+        );
+
+router
+    .route('/store/:slug')
+    .get(catchErrors(storeController.getStoreBySlug))
+
+router
+    .route('/tags')
+    .get(catchErrors(storeController.getStoresByTag))
+
+router
+    .route('/tags/:tag')
+    .get(catchErrors(storeController.getStoresByTag))
+
+router.route('/login').get(userController.loginForm);
+
+router
+    .route('/register')
+    .get(userController.registerForm)
+    
+    // 1. validate data
+    // 2. register the user
+    // 3. log them in after register
+    .post(userController.registerValidator);
 
 
 // router.get('/'      , catchErrors(storeController.getStores));
